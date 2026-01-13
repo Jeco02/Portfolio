@@ -1,0 +1,884 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jéconias S. B. BOROTE - Développeur Web</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #00d4ff;
+            --secondary: #7c3aed;
+            --accent: #f97316;
+            --bg-dark: #0a0e27;
+            --bg-card: #151a35;
+            --bg-card-hover: #1a1f3a;
+            --text-primary: #e2e8f0;
+            --text-secondary: #94a3b8;
+            --gradient-1: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-2: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --gradient-3: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            line-height: 1.6;
+            color: var(--text-primary);
+            background: var(--bg-dark);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        header {
+            background: rgba(10, 14, 39, 0.95);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: white;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: all 0.3s;
+            position: relative;
+            padding: 5px 0;
+            font-weight: 500;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-3);
+            transition: width 0.3s;
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .menu-toggle {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .hero {
+            background: var(--bg-dark);
+            color: white;
+            padding: 140px 0 120px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: 
+                radial-gradient(circle at 20% 50%, rgba(124, 58, 237, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(0, 212, 255, 0.15) 0%, transparent 50%);
+        }
+
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
+        }
+
+        @keyframes twinkle {
+            0%, 100% { opacity: 0.3; transform: scale(1); }
+            50% { opacity: 1; transform: scale(1.2); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s;
+            font-weight: 800;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero .subtitle {
+            font-size: 1.8rem;
+            margin-bottom: 15px;
+            opacity: 0.95;
+            animation: fadeInUp 1s 0.2s backwards;
+            color: var(--text-primary);
+        }
+
+        .hero p {
+            font-size: 1.15rem;
+            margin-bottom: 40px;
+            color: var(--text-secondary);
+            animation: fadeInUp 1s 0.3s backwards;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.8;
+        }
+
+        .btn-group {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            animation: fadeInUp 1s 0.5s backwards;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 16px 40px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: all 0.4s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: var(--gradient-3);
+            color: white;
+            box-shadow: 0 10px 40px rgba(0, 212, 255, 0.3);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--primary);
+            border: 2px solid var(--primary);
+            box-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 50px rgba(0, 212, 255, 0.4);
+        }
+
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        section:nth-child(even) {
+            background: rgba(21, 26, 53, 0.3);
+        }
+
+        h2 {
+            font-size: 3rem;
+            margin-bottom: 60px;
+            text-align: center;
+            color: var(--text-primary);
+            position: relative;
+            font-weight: 800;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--gradient-3);
+            border-radius: 2px;
+        }
+
+        .about-content {
+            max-width: 900px;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .about-content p {
+            margin-bottom: 25px;
+            font-size: 1.15rem;
+            color: var(--text-secondary);
+            line-height: 1.9;
+        }
+
+        .about-content strong {
+            color: var(--primary);
+        }
+
+        .contact-info {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin-top: 50px;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: var(--bg-card);
+            color: var(--text-primary);
+            padding: 15px 30px;
+            border-radius: 50px;
+            font-weight: 600;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+        }
+
+        .contact-item:hover {
+            transform: translateY(-3px);
+            border-color: var(--primary);
+            box-shadow: 0 8px 32px rgba(0, 212, 255, 0.3);
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 40px;
+            margin-top: 40px;
+        }
+
+        .skill-card {
+            background: var(--bg-card);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            transition: all 0.4s;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .skill-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: var(--gradient-3);
+        }
+
+        .skill-card::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(0, 212, 255, 0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.5s;
+        }
+
+        .skill-card:hover::after {
+            opacity: 1;
+        }
+
+        .skill-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(0, 212, 255, 0.2);
+            border-color: rgba(0, 212, 255, 0.3);
+        }
+
+        .skill-card h3 {
+            color: var(--text-primary);
+            margin-bottom: 25px;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .skill-card ul {
+            list-style: none;
+        }
+
+        .skill-card li {
+            padding: 12px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+            transition: all 0.3s;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .skill-card li::before {
+            content: '▸';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        .skill-card li:hover {
+            color: var(--primary);
+            padding-left: 30px;
+        }
+
+        .skill-card li:last-child {
+            border-bottom: none;
+        }
+
+        .experience-item, .project-item {
+            background: var(--bg-card);
+            padding: 40px;
+            margin-bottom: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            border-left: 4px solid var(--primary);
+            transition: all 0.4s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .experience-item::before, .project-item::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(0, 212, 255, 0.1), transparent);
+            transition: left 0.5s;
+        }
+
+        .experience-item:hover::before, .project-item:hover::before {
+            left: 100%;
+        }
+
+        .experience-item:hover, .project-item:hover {
+            transform: translateX(10px);
+            box-shadow: 0 15px 50px rgba(0, 212, 255, 0.2);
+            border-left-color: var(--primary);
+        }
+
+        .experience-item h3, .project-item h3 {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        .experience-item .date {
+            color: var(--text-secondary);
+            font-style: italic;
+            margin-bottom: 20px;
+            font-size: 0.95rem;
+        }
+
+        .experience-item ul, .project-item ul {
+            margin-left: 20px;
+            margin-top: 15px;
+        }
+
+        .experience-item li, .project-item li {
+            margin-bottom: 8px;
+            color: var(--text-secondary);
+        }
+
+        .formations-grid {
+            display: grid;
+            gap: 25px;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .formation-item {
+            background: var(--bg-card);
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+            border-left: 4px solid var(--primary);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .formation-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.2);
+            border-color: var(--primary);
+        }
+
+        .languages, .interests {
+            display: flex;
+            gap: 25px;
+            justify-content: center;
+            flex-wrap: wrap;
+            font-size: 1.2rem;
+        }
+
+        .languages > div, .interests > div {
+            background: var(--bg-card);
+            color: var(--text-primary);
+            padding: 18px 35px;
+            border-radius: 50px;
+            font-weight: 600;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s;
+        }
+
+        .languages > div:hover, .interests > div:hover {
+            transform: scale(1.1);
+            background: var(--gradient-3);
+            border-color: transparent;
+            box-shadow: 0 8px 32px rgba(0, 212, 255, 0.4);
+        }
+
+        .contact-form {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--bg-card);
+            padding: 50px;
+            border-radius: 20px;
+            box-shadow: 0 10px 50px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: all 0.3s;
+            font-family: inherit;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-primary);
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus {
+            outline: none;
+            border-color: var(--primary);
+            background: rgba(255, 255, 255, 0.08);
+            box-shadow: 0 0 0 3px rgba(0, 212, 255, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 150px;
+        }
+
+        footer {
+            background: rgba(10, 14, 39, 0.8);
+            color: white;
+            text-align: center;
+            padding: 50px 0;
+            position: relative;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        footer::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gradient-3);
+        }
+
+        footer p {
+            margin: 10px 0;
+            opacity: 0.9;
+        }
+
+        .scroll-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: var(--gradient-3);
+            color: white;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 8px 32px rgba(0, 212, 255, 0.4);
+            opacity: 0;
+            transform: translateY(100px);
+            transition: all 0.3s;
+            z-index: 999;
+            font-size: 1.5rem;
+            border: 2px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .scroll-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .scroll-top:hover {
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 12px 40px rgba(0, 212, 255, 0.5);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 70px;
+                left: 0;
+                right: 0;
+                background: rgba(10, 14, 39, 0.98);
+                padding: 20px;
+                backdrop-filter: blur(20px);
+                border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .menu-toggle {
+                display: block;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero .subtitle {
+                font-size: 1.3rem;
+            }
+
+            .btn-group {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            h2 {
+                font-size: 2.2rem;
+            }
+
+            .contact-form {
+                padding: 30px;
+            }
+
+            .skills-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="container">
+            <div class="logo">
+                <span>✨</span>
+                <span>Portfolio</span>
+            </div>
+            <button class="menu-toggle" onclick="toggleMenu()">☰</button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#accueil">Accueil</a></li>
+                <li><a href="#apropos">À propos</a></li>
+                <li><a href="#competences">Compétences</a></li>
+                <li><a href="#experiences">Expériences</a></li>
+                <li><a href="#projets">Projets</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <section id="accueil" class="hero">
+        <div class="stars" id="stars"></div>
+        <div class="container hero-content">
+            <h1>🌐 Jéconias S. B. BOROTE</h1>
+            <p class="subtitle">Développeur Web</p>
+            <p>Je conçois des applications web modernes, fonctionnelles et adaptées aux besoins réels des utilisateurs. Passionné par les solutions numériques utiles et innovantes.</p>
+            <div class="btn-group">
+                <a href="#" class="btn btn-primary" onclick="downloadCV()">📄 Télécharger mon CV</a>
+                <a href="#contact" class="btn btn-secondary">📩 Me contacter</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="apropos">
+        <div class="container">
+            <h2>👤 À propos de moi</h2>
+            <div class="about-content">
+                <p>Je suis <strong>Jéconias S. B. BOROTE</strong>, développeur web béninois, titulaire d'une Licence en Systèmes Informatiques et Logiciels.</p>
+                <p>Passionné par le numérique, je m'intéresse particulièrement au développement web, aux nouvelles technologies et à l'intelligence artificielle.</p>
+                <p>J'ai acquis de l'expérience à travers plusieurs stages et projets professionnels, notamment dans la conception d'applications web et d'assistants virtuels. Autonome, créatif et doté d'une grande capacité d'apprentissage, je m'adapte rapidement à de nouveaux environnements de travail.</p>
+                <div class="contact-info">
+                    <div class="contact-item">📍 Abomey-Calavi & Parakou</div>
+                    <div class="contact-item">📧 jeconiasborote1@gmail.com</div>
+                    <div class="contact-item">📞 01 95 89 11 60</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="competences">
+        <div class="container">
+            <h2>🛠️ Compétences</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <h3>💻 Développement Web</h3>
+                    <ul>
+                        <li>HTML5, CSS3, JavaScript</li>
+                        <li>PHP & MySQL</li>
+                        <li>Bootstrap</li>
+                        <li>WordPress</li>
+                        <li>Intégration d'API</li>
+                        <li>Sites responsives</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <h3>🧰 Outils</h3>
+                    <ul>
+                        <li>Git</li>
+                        <li>VS Code</li>
+                        <li>XAMPP</li>
+                    </ul>
+                </div>
+                <div class="skill-card">
+                    <h3>🤝 Compétences humaines</h3>
+                    <ul>
+                        <li>Travail en équipe</li>
+                        <li>Gestion du temps</li>
+                        <li>Communication</li>
+                        <li>Créativité</li>
+                        <li>Apprentissage rapide</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="experiences">
+        <div class="container">
+            <h2>💼 Expériences professionnelles</h2>
+            <div class="experience-item">
+                <h3>🔹 Développeur Web – Etrilabs (Parakou)</h3>
+                <div class="date">Septembre 2025 – Aujourd'hui</div>
+                <ul>
+                    <li>Travail au sein du service de développement web</li>
+                    <li>Participation à la conception et à l'amélioration d'applications web</li>
+                </ul>
+            </div>
+            <div class="experience-item">
+                <h3>🔹 Stage académique – Excel Technologie et Services</h3>
+                <div class="date">Mars 2024 – Mai 2024</div>
+                <ul>
+                    <li>Conception et réalisation d'un assistant virtuel WhatsApp pour le service commercial</li>
+                    <li>Suivi du projet en collaboration avec les équipes</li>
+                </ul>
+            </div>
+            <div class="experience-item">
+                <h3>🔹 Stage – BloLab Parakou</h3>
+                <div class="date">2025</div>
+            </div>
+            <div class="experience-item">
+                <h3>🔹 Projet WURI Bénin – Imprégnateur</h3>
+                <div class="date">Kouandé</div>
+                <ul>
+                    <li>Sensibilisation des populations</li>
+                    <li>Collecte de données</li>
+                    <li>Rédaction de rapports</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="projets">
+        <div class="container">
+            <h2>🚀 Projets & Réalisations</h2>
+            <div class="project-item">
+                <h3>🤖 Assistant Virtuel WhatsApp</h3>
+                <ul>
+                    <li>Automatisation des réponses clients</li>
+                    <li>Amélioration de la communication commerciale</li>
+                    <li>Intégration d'API WhatsApp</li>
+                </ul>
+            </div>
+            <div class="project-item">
+                <h3>💡 Hackathon UNICEF – Djougou</h3>
+                <p style="color: var(--text-secondary);">Conception d'une solution numérique pour :</p>
+                <ul>
+                    <li>La promotion de la vaccination</li>
+                    <li>La lutte contre les fausses informations</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section id="formations">
+        <div class="container">
+            <h2>🎓 Formations & Certifications</h2>
+            <div class="formations-grid">
+                <div class="formation-item">
+                    <strong>Licence en Systèmes Informatiques et Logiciels</strong> – HECM Parakou
+                </div>
+                <div class="formation-item">
+                    <strong>ICDL Module 1 à 4</strong>
+                </div>
+                <div class="formation-item">
+                    <strong>BAC Série D</strong> (Scientifique)
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="langues">
+        <div class="container">
+            <h2>🌍 Langues</h2>
+            <div class="languages">
+                <div>🇫🇷 Français</div>
+                <div>🇬🇧 Anglais</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="interets">
+        <div class="container">
+            <h2>🎯 Centres d'intérêt</h2>
+            <div class="interests">
+                <div>📚 Lecture</div>
+                <div>🎵 Musique</div>
+                <div>⚽ Sport</div>
+                <div>💻 Nouvelles technologies</div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact">
+        <div class="container">
+            <h2>📩 Contact</h2>
+            <p style="text-align: center; margin-bottom: 40px; font-size: 1.2rem; color: var(--text-secondary);">Vous avez un projet ou une idée ? Discutons-en !</p>
+            <div class="contact-form">
+                <form onsubmit="handleSubmit(event)">
+                    <div class="form-group">
+                        <label for="name">Nom complet</label>
+                        <input type="text" id="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%;">Envoyer le message</button>
+                </form>
+                <div class="contact-info" style="margin-top: 40px;">
